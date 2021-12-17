@@ -15,6 +15,8 @@ const (
 
 	// RouterKey is the msg router key for the staking module
 	RouterKey = ModuleName
+
+	QuerierRoute = ModuleName
 )
 
 var (

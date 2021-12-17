@@ -1,0 +1,35 @@
+syntax = "proto3";
+package errata.audit.v1beta1;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+
+option go_package = "github.com/mattverse/errata/x/audit/types";
+
+// Query defines the gRPC querier service.
+service Query {
+    rpc Protocol(QueryProtocolRequest) returns(QueryProtocolResponse) {
+        option (google.api.http).get =  "/errata/audit/v1beta1/protocol";
+    }
+}
+
+message QueryProtocolRequest {
+    option (gogoproto.equal) = false;
+    option (gogoproto.goproto_getters) = false;
+
+    uint64 id  = 1;
+}
+
+message QueryProtocolResponse {
+    string title = 1;
+    string description = 2;
+    string source_code = 3;
+    string project_home = 4;
+    string category = 5;
+    string attack_pool = 6 [
+        (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+    ];
+    string defense_pool = 7 [
+        (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+    ];
+}
