@@ -38,10 +38,10 @@ message MsgJoinAttackPool {
     option (gogoproto.goproto_getters) = false;
 
     uint64 poolId = 1 [ (gogoproto.moretags) = "yaml:\"pool_id\"" ];
-    cosmos.base.v1beta1.Coin tokenIn = 2 [
+    string token_in = 2 [
         (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
-        (gogoproto.nullable) = false,
-        (gogoproto.moretags) = "yaml:\"token_in\""
+        (gogoproto.moretags) = "yaml:\"token_in\"",
+        (gogoproto.nullable) = false
     ];
     string sender = 3[ (gogoproto.moretags) = "yaml:\"sender\"" ];
 }
@@ -54,10 +54,10 @@ message MsgJoinDefensePool {
     option (gogoproto.goproto_getters) = false;
 
     uint64 poolId = 1 [ (gogoproto.moretags) = "yaml:\"pool_id\"" ];
-    cosmos.base.v1beta1.Coin tokenIn = 2 [
+    string token_in = 2 [
         (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
-        (gogoproto.nullable) = false,
-        (gogoproto.moretags) = "yaml:\"token_in\""
+        (gogoproto.moretags) = "yaml:\"token_in\"",
+        (gogoproto.nullable) = false
     ];
     string sender = 3[ (gogoproto.moretags) = "yaml:\"sender\"" ];
 }

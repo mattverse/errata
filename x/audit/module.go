@@ -12,11 +12,11 @@ import (
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
-	"github.com/cosmos/cosmos-sdk/x/gov/client/cli"
 
 	"github.com/gorilla/mux"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 
+	"github.com/mattverse/errata/x/audit/client/cli"
 	"github.com/mattverse/errata/x/audit/keeper"
 	"github.com/mattverse/errata/x/audit/types"
 )
