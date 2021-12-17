@@ -8,6 +8,23 @@ import (
 	"github.com/mattverse/errata/x/audit/types"
 )
 
+func (k Keeper) RegisterProtocol(ctx sdk.Context, title string, description string, sourceCode string, projectHome string, category string) error {
+	id := k.GetLastProtocolID(ctx) + 1
+	protocol := types.Protocol{
+		Id:          id,
+		Title:       title,
+		Description: description,
+		SourceCode:  sourceCode,
+		ProjectHome: projectHome,
+		Category:    category,
+	}
+	err := k.setProtocol(ctx, protocol)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (k Keeper) GetProtocolByID(ctx sdk.Context, protocolID uint64) (*types.Protocol, error) {
 	protocol := types.Protocol{}
 	store := ctx.KVStore(k.storeKey)
@@ -35,6 +52,32 @@ func (k Keeper) GetAllProtocol(ctx sdk.Context) []types.Protocol {
 	}
 	return protocols
 
+}
+
+func (k Keeper) SetProtocols(ctx sdk.Context, protocols []types.Protocol) error {
+	for _, protocol := range protocols {
+		err := k.setProtocol(ctx, protocol)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (k Keeper) GetLastProtocolID(ctx sdk.Context) uint64 {
+	store := ctx.KVStore(k.storeKey)
+
+	bz := store.Get(types.KeyLastProtocolID)
+	if bz == nil {
+		return 0
+	}
+
+	return sdk.BigEndianToUint64(bz)
+}
+
+func (k Keeper) SetLastProtocolID(ctx sdk.Context, ID uint64) {
+	store := ctx.KVStore(k.storeKey)
+	store.Set(types.KeyLastProtocolID, sdk.Uint64ToBigEndian(ID))
 }
 
 func (k Keeper) setProtocol(ctx sdk.Context, protocol types.Protocol) error {
@@ -69,10 +112,16 @@ func (k Keeper) AddDefensePoolByProtocolId(ctx sdk.Context, protocolID uint64, a
 	return nil
 }
 
-func (k Keeper) AddErrata(ctx sdk.Context, protocolID uint64, errata types.Errata) error {
+func (k Keeper) AddErrata(ctx sdk.Context, protocolID uint64, vulnerabilityType string, errataCode string, vulnerability string) error {
 	protocol, err := k.GetProtocolByID(ctx, protocolID)
 	if err != nil {
 		return err
+	}
+
+	errata := types.Errata{
+		Vulnerability:     vulnerability,
+		ErrataCode:        errataCode,
+		VulnerabilityType: vulnerabilityType,
 	}
 
 	protocol.Errata = append(protocol.Errata, &errata)

@@ -1,0 +1,17 @@
+syntax = "proto3";
+package errata.audit.v1beta1;
+
+import "gogoproto/gogo.proto";
+import "errata/audit/v1beta/audit.proto";
+
+
+option go_package = "github.com/mattverse/errata/x/audit/types";
+
+// GenesisState defines the bond module's genesis state.
+message GenesisState {
+    repeated Protocol protocols = 1 [
+    (gogoproto.moretags) = "yaml:\"protocols\"",
+    (gogoproto.nullable) = false
+  ];
+}
+

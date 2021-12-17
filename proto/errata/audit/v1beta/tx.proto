@@ -1,0 +1,78 @@
+syntax = "proto3";
+package errata.audit.v1beta1;
+
+import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+
+option go_package = "github.com/mattverse/errata/x/audit/types";
+
+// Msg defines the audit Msg service.
+service Msg {
+    // RegisterProtocol defines a method for registering a new protocol to Errata protocol
+    rpc RegisterProtocol(MsgRegisterProtocol) returns (MsgRegisterProtocolResponse);
+    // JoinAttackPool defines a method for joining the attack pool
+    rpc JoinAttackPool(MsgJoinAttackPool) returns (MsgJoinAttackPoolResponse);
+    // JoinDefensePool defines a method for joining the defense pool
+    rpc JoinDefensePool(MsgJoinDefensePool) returns (MsgJoinDefensePoolResponse);
+    // AddErrata definss a method for registering a new Errata for a procol
+    rpc AddErrata(MsgAddErrata) returns (MsgAddErrataResponse);
+}
+
+message MsgRegisterProtocol {
+    option (gogoproto.equal)           = false;
+    option (gogoproto.goproto_getters) = false;
+
+    string title = 1 [ (gogoproto.moretags) = "yaml:\"title\"" ];
+    string description = 2 [ (gogoproto.moretags) = "yaml:\"description\""];
+    string source_code = 3 [ (gogoproto.moretags) = "yaml:\"source_code\""];
+    string project_home = 4 [ (gogoproto.moretags) = "yaml:\"project_home\""];
+    string category = 5 [ (gogoproto.moretags) = "yaml:\"project_home\""];
+    string sender = 6 [ (gogoproto.moretags) = "yaml:\"sender\""];
+}
+
+message MsgRegisterProtocolResponse {}
+
+message MsgJoinAttackPool {
+    option (gogoproto.equal)           = false;
+    option (gogoproto.goproto_getters) = false;
+
+    uint64 poolId = 1 [ (gogoproto.moretags) = "yaml:\"pool_id\"" ];
+    cosmos.base.v1beta1.Coin tokenIn = 2 [
+        (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+        (gogoproto.nullable) = false,
+        (gogoproto.moretags) = "yaml:\"token_in\""
+    ];
+    string sender = 3[ (gogoproto.moretags) = "yaml:\"sender\"" ];
+}
+
+message MsgJoinAttackPoolResponse {}
+
+
+message MsgJoinDefensePool {
+    option (gogoproto.equal)           = false;
+    option (gogoproto.goproto_getters) = false;
+
+    uint64 poolId = 1 [ (gogoproto.moretags) = "yaml:\"pool_id\"" ];
+    cosmos.base.v1beta1.Coin tokenIn = 2 [
+        (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+        (gogoproto.nullable) = false,
+        (gogoproto.moretags) = "yaml:\"token_in\""
+    ];
+    string sender = 3[ (gogoproto.moretags) = "yaml:\"sender\"" ];
+}
+
+message MsgJoinDefensePoolResponse {}
+
+message MsgAddErrata {
+    option (gogoproto.equal)           = false;
+    option (gogoproto.goproto_getters) = false;
+
+    uint64 poolId = 1 [(gogoproto.moretags) = "yaml:\"pool_id\"" ];
+    string vulnerability_type = 2 [(gogoproto.moretags) = "yaml:\"vulnerability_type\"" ];
+    string errata_code = 3 [(gogoproto.moretags) = "yaml:\"errata_code\"" ];
+    string vulnerability = 4 [(gogoproto.moretags) = "yaml:\"vulnerability\"" ];
+    string sender = 5 [ (gogoproto.moretags) = "yaml:\"sender\""];
+}
+
+message MsgAddErrataResponse{}

@@ -1,29 +1,41 @@
 package types
 
-// // RegisterLegacyAminoCodec registers the necessary x/stake interfaces and
-// // concrete types on the provided LegacyAmino codec. These types are used for
-// // Amino JSON serialization.
-// func RegisterCodec(cdc *codec.LegacyAmino) {
-// 	cdc.RegisterConcrete(&MsgJoinStake{}, "arbiter/stake/join-stake", nil)
-// 	cdc.RegisterConcrete(&MsgClaim{}, "arbiter/stake/claim", nil)
-// }
+import (
+	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/codec/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/msgservice"
+)
 
-// func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
-// 	registry.RegisterImplementations(
-// 		(*sdk.Msg)(nil),
-// 		&MsgJoinStake{},
-// 		&MsgClaim{},
-// 	)
+// RegisterLegacyAminoCodec registers the necessary x/stake interfaces and
+// concrete types on the provided LegacyAmino codec. These types are used for
+// Amino JSON serialization.
+func RegisterCodec(cdc *codec.LegacyAmino) {
+	cdc.RegisterConcrete(&MsgRegisterProtocol{}, "errata/audit/MsgRegisterProtocol", nil)
+	cdc.RegisterConcrete(&MsgJoinAttackPool{}, "errata/audit/MsgJoinAttackPool", nil)
+	cdc.RegisterConcrete(&MsgJoinDefensePool{}, "errata/audit/MsgJoinDefensePool", nil)
+	cdc.RegisterConcrete(&MsgAddErrata{}, "errata/audit/MsgAddErrata", nil)
 
-// 	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)
-// }
+}
 
-// var (
-// 	amino     = codec.NewLegacyAmino()
-// 	ModuleCdc = codec.NewAminoCodec(amino)
-// )
+func RegisterInterfaces(registry types.InterfaceRegistry) {
+	registry.RegisterImplementations(
+		(*sdk.Msg)(nil),
+		&MsgRegisterProtocol{},
+		&MsgJoinAttackPool{},
+		&MsgJoinDefensePool{},
+		&MsgAddErrata{},
+	)
 
-// func init() {
-// 	RegisterCodec(amino)
-// 	amino.Seal()
-// }
+	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)
+}
+
+var (
+	amino     = codec.NewLegacyAmino()
+	ModuleCdc = codec.NewAminoCodec(amino)
+)
+
+func init() {
+	RegisterCodec(amino)
+	amino.Seal()
+}
