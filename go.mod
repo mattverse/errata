@@ -1,4 +1,4 @@
-module github.com/hackatom/hackatom
+module github.com/mattverse/errata
 
 go 1.16
 

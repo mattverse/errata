@@ -6,8 +6,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/server"
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 
-	"github.com/hackatom/hackatom/app"
-	"github.com/hackatom/hackatom/cmd/appd/cmd"
+	"github.com/mattverse/errata/app"
+	"github.com/mattverse/errata/cmd/erratad/cmd"
 )
 
 func main() {
