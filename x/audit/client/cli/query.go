@@ -25,6 +25,7 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 
 	cmd.AddCommand(
 		GetCmdProtocol(),
+		GetCmdProtocols(),
 	)
 
 	return cmd
@@ -57,6 +58,45 @@ $ %s query audit protocol <id>
 			}
 
 			res, err := queryClient.Protocol(cmd.Context(), &types.QueryProtocolRequest{Id: uint64(poolID)})
+			if err != nil {
+				return err
+			}
+
+			return clientCtx.PrintProto(res)
+		},
+	}
+
+	flags.AddQueryFlagsToCmd(cmd)
+
+	return cmd
+}
+
+func GetCmdProtocols() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "protocols",
+		Short: "List protocols",
+		Long: strings.TrimSpace(
+			fmt.Sprintf(`List protocols
+
+Example:
+$ %s query audit protocols
+`,
+				version.AppName,
+			),
+		),
+		Args: cobra.ExactArgs(0),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			clientCtx, err := client.GetClientQueryContext(cmd)
+			if err != nil {
+				return err
+			}
+			queryClient := types.NewQueryClient(clientCtx)
+
+			if err != nil {
+				return err
+			}
+
+			res, err := queryClient.Protocols(cmd.Context(), &types.QueryProtocolsRequest{})
 			if err != nil {
 				return err
 			}
