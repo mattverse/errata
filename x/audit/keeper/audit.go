@@ -75,9 +75,9 @@ func (k Keeper) GetLastProtocolID(ctx sdk.Context) uint64 {
 	return sdk.BigEndianToUint64(bz)
 }
 
-func (k Keeper) SetLastProtocolID(ctx sdk.Context, ID uint64) {
+func (k Keeper) SetLastProtocolID(ctx sdk.Context, id uint64) {
 	store := ctx.KVStore(k.storeKey)
-	store.Set(types.KeyLastProtocolID, sdk.Uint64ToBigEndian(ID))
+	store.Set(types.KeyLastProtocolID, sdk.Uint64ToBigEndian(id))
 }
 
 func (k Keeper) setProtocol(ctx sdk.Context, protocol types.Protocol) error {
@@ -90,25 +90,33 @@ func (k Keeper) setProtocol(ctx sdk.Context, protocol types.Protocol) error {
 	return nil
 }
 
-func (k Keeper) AddAttackPoolByProtocolId(ctx sdk.Context, protocolID uint64, amount sdk.Int) error {
+func (k Keeper) AddAttackPoolByProtocolID(ctx sdk.Context, protocolID uint64, amount sdk.Int) error {
 	protocol, err := k.GetProtocolByID(ctx, protocolID)
 	if err != nil {
 		return err
 	}
 
 	protocol.AttackPool = protocol.AttackPool.Add(amount)
-	k.setProtocol(ctx, *protocol)
+	err = k.setProtocol(ctx, *protocol)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
-func (k Keeper) AddDefensePoolByProtocolId(ctx sdk.Context, protocolID uint64, amount sdk.Int) error {
+func (k Keeper) AddDefensePoolByProtocolID(ctx sdk.Context, protocolID uint64, amount sdk.Int) error {
 	protocol, err := k.GetProtocolByID(ctx, protocolID)
 	if err != nil {
 		return err
 	}
 
 	protocol.DefensePool = protocol.DefensePool.Add(amount)
-	k.setProtocol(ctx, *protocol)
+	err = k.setProtocol(ctx, *protocol)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -125,7 +133,12 @@ func (k Keeper) AddErrata(ctx sdk.Context, protocolID uint64, vulnerabilityType 
 	}
 
 	protocol.Errata = append(protocol.Errata, &errata)
-	k.setProtocol(ctx, *protocol)
+	err = k.setProtocol(ctx, *protocol)
+
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
