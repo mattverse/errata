@@ -36,6 +36,7 @@ message QueryProtocolResponse {
     string defense_pool = 7 [
         (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
     ];
+    uint64 id = 8;
 }
 
 message QueryProtocolsRequest {

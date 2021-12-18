@@ -34,6 +34,7 @@ func (q queryServer) Protocol(ctx context.Context, req *types.QueryProtocolReque
 		Category:    protocol.Category,
 		AttackPool:  &protocol.AttackPool,
 		DefensePool: &protocol.DefensePool,
+		Id:          protocol.Id,
 	}, nil
 }
 
