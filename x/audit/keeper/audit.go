@@ -22,6 +22,7 @@ func (k Keeper) RegisterProtocol(ctx sdk.Context, title string, description stri
 	if err != nil {
 		return err
 	}
+	k.SetLastProtocolID(ctx, id)
 	return nil
 }
 
