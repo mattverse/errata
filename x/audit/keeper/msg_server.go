@@ -34,7 +34,7 @@ func (k msgServer) RegisterProtocol(goCtx context.Context, msg *types.MsgRegiste
 func (k msgServer) JoinAttackPool(goCtx context.Context, msg *types.MsgJoinAttackPool) (*types.MsgJoinAttackPoolResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := k.keeper.AddAttackPoolByProtocolId(ctx, msg.PoolId, msg.TokenIn)
+	err := k.keeper.AddAttackPoolByProtocolID(ctx, msg.PoolId, msg.TokenIn)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func (k msgServer) JoinAttackPool(goCtx context.Context, msg *types.MsgJoinAttac
 func (k msgServer) JoinDefensePool(goCtx context.Context, msg *types.MsgJoinDefensePool) (*types.MsgJoinDefensePoolResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := k.keeper.AddDefensePoolByProtocolId(ctx, msg.PoolId, msg.TokenIn)
+	err := k.keeper.AddDefensePoolByProtocolID(ctx, msg.PoolId, msg.TokenIn)
 	if err != nil {
 		return nil, err
 	}
