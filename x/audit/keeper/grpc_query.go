@@ -47,8 +47,8 @@ func (q queryServer) Protocols(ctx context.Context, req *types.QueryProtocolsReq
 		return nil, err
 	}
 
-	for _, p := range rawPs {
-		protocols = append(protocols, &p)
+	for i := range rawPs {
+		protocols = append(protocols, &rawPs[i])
 	}
 
 	return &types.QueryProtocolsResponse{Protocol: protocols}, nil
