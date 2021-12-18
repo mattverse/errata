@@ -3,7 +3,6 @@ package keeper
 import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 
 	"github.com/mattverse/errata/x/audit/types"
 )
@@ -16,7 +15,7 @@ type Keeper struct {
 }
 
 // NewKeeper creates a new bond Keeper instance
-func NewKeeper(cdc codec.BinaryMarshaler, key sdk.StoreKey, bk types.BankKeeper, ps paramtypes.Subspace) Keeper {
+func NewKeeper(cdc codec.BinaryMarshaler, key sdk.StoreKey, bk types.BankKeeper) Keeper {
 	// set KeyTable if it has not already been set
 
 	return Keeper{
