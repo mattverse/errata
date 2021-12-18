@@ -34,7 +34,12 @@ func (k msgServer) RegisterProtocol(goCtx context.Context, msg *types.MsgRegiste
 func (k msgServer) JoinAttackPool(goCtx context.Context, msg *types.MsgJoinAttackPool) (*types.MsgJoinAttackPoolResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := k.keeper.AddAttackPoolByProtocolID(ctx, msg.PoolId, msg.TokenIn)
+	sender, err := sdk.AccAddressFromBech32(msg.Sender)
+	if err != nil {
+		return nil, err
+	}
+
+	err = k.keeper.AddAttackPoolByProtocolID(ctx, msg.PoolId, msg.TokenIn, sender)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +50,12 @@ func (k msgServer) JoinAttackPool(goCtx context.Context, msg *types.MsgJoinAttac
 func (k msgServer) JoinDefensePool(goCtx context.Context, msg *types.MsgJoinDefensePool) (*types.MsgJoinDefensePoolResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	err := k.keeper.AddDefensePoolByProtocolID(ctx, msg.PoolId, msg.TokenIn)
+	sender, err := sdk.AccAddressFromBech32(msg.Sender)
+	if err != nil {
+		return nil, err
+	}
+
+	err = k.keeper.AddDefensePoolByProtocolID(ctx, msg.PoolId, msg.TokenIn, sender)
 	if err != nil {
 		return nil, err
 	}

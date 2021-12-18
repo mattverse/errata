@@ -92,7 +92,7 @@ func (k Keeper) setProtocol(ctx sdk.Context, protocol types.Protocol) error {
 	return nil
 }
 
-func (k Keeper) AddAttackPoolByProtocolID(ctx sdk.Context, protocolID uint64, amount sdk.Int) error {
+func (k Keeper) AddAttackPoolByProtocolID(ctx sdk.Context, protocolID uint64, amount sdk.Int, sender sdk.AccAddress) error {
 	protocol, err := k.GetProtocolByID(ctx, protocolID)
 	if err != nil {
 		return err
@@ -104,10 +104,21 @@ func (k Keeper) AddAttackPoolByProtocolID(ctx sdk.Context, protocolID uint64, am
 		return err
 	}
 
+	stakedCoin := sdk.NewCoin("uert", amount)
+	err = k.bankKeeper.SendCoinsFromAccountToModule(ctx, sender, types.ModuleName, sdk.Coins{stakedCoin})
+	if err != nil {
+		return err
+	}
+
+	err = k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.Coins{stakedCoin})
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
-func (k Keeper) AddDefensePoolByProtocolID(ctx sdk.Context, protocolID uint64, amount sdk.Int) error {
+func (k Keeper) AddDefensePoolByProtocolID(ctx sdk.Context, protocolID uint64, amount sdk.Int, sender sdk.AccAddress) error {
 	protocol, err := k.GetProtocolByID(ctx, protocolID)
 	if err != nil {
 		return err
@@ -115,6 +126,17 @@ func (k Keeper) AddDefensePoolByProtocolID(ctx sdk.Context, protocolID uint64, a
 
 	protocol.DefensePool = protocol.DefensePool.Add(amount)
 	err = k.setProtocol(ctx, *protocol)
+	if err != nil {
+		return err
+	}
+
+	stakedCoin := sdk.NewCoin("uert", amount)
+	err = k.bankKeeper.SendCoinsFromAccountToModule(ctx, sender, types.ModuleName, sdk.Coins{stakedCoin})
+	if err != nil {
+		return err
+	}
+
+	err = k.bankKeeper.BurnCoins(ctx, types.ModuleName, sdk.Coins{stakedCoin})
 	if err != nil {
 		return err
 	}

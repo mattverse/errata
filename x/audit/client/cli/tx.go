@@ -79,7 +79,7 @@ func NewJoinAttackPoolCmd() *cobra.Command {
 				return fmt.Errorf("invalid token amount")
 			}
 
-			msg := types.NewMsgJoinAttackPool(uint64(poolID), tokenIn)
+			msg := types.NewMsgJoinAttackPool(uint64(poolID), tokenIn, clientCtx.GetFromAddress())
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
@@ -114,7 +114,7 @@ func NewJoinDefensePoolCmd() *cobra.Command {
 				return fmt.Errorf("invalid token amount")
 			}
 
-			msg := types.NewMsgJoinDefensePool(uint64(poolID), tokenIn)
+			msg := types.NewMsgJoinDefensePool(uint64(poolID), tokenIn, clientCtx.GetFromAddress())
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}

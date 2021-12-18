@@ -63,10 +63,11 @@ func (msg MsgRegisterProtocol) ValidateBasic() error {
 	return nil
 }
 
-func NewMsgJoinAttackPool(poolID uint64, tokenIn sdk.Int) *MsgJoinAttackPool {
+func NewMsgJoinAttackPool(poolID uint64, tokenIn sdk.Int, sender sdk.AccAddress) *MsgJoinAttackPool {
 	return &MsgJoinAttackPool{
 		PoolId:  poolID,
 		TokenIn: tokenIn,
+		Sender:  sender.String(),
 	}
 }
 
@@ -98,10 +99,11 @@ func (msg MsgJoinAttackPool) ValidateBasic() error {
 	return nil
 }
 
-func NewMsgJoinDefensePool(poolID uint64, tokenIn sdk.Int) *MsgJoinAttackPool {
-	return &MsgJoinAttackPool{
+func NewMsgJoinDefensePool(poolID uint64, tokenIn sdk.Int, sender sdk.AccAddress) *MsgJoinDefensePool {
+	return &MsgJoinDefensePool{
 		PoolId:  poolID,
 		TokenIn: tokenIn,
+		Sender:  sender.String(),
 	}
 }
 
