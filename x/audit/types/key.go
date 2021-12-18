@@ -30,8 +30,8 @@ var (
 	KeyIndexSeparator = []byte{0xFF}
 )
 
-func ProtocolStoreKey(ID uint64) []byte {
-	return combineKeys(KeyProtocol, sdk.Uint64ToBigEndian(ID))
+func ProtocolStoreKey(id uint64) []byte {
+	return combineKeys(KeyProtocol, sdk.Uint64ToBigEndian(id))
 }
 
 // combineKeys combine bytes array into a single bytes

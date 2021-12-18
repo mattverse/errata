@@ -56,9 +56,9 @@ func (msg MsgRegisterProtocol) ValidateBasic() error {
 	return nil
 }
 
-func NewMsgJoinAttackPool(poolId uint64, tokenIn sdk.Int) *MsgJoinAttackPool {
+func NewMsgJoinAttackPool(poolID uint64, tokenIn sdk.Int) *MsgJoinAttackPool {
 	return &MsgJoinAttackPool{
-		PoolId:  poolId,
+		PoolId:  poolID,
 		TokenIn: tokenIn,
 	}
 }
@@ -91,9 +91,9 @@ func (msg MsgJoinAttackPool) ValidateBasic() error {
 	return nil
 }
 
-func NewMsgJoinDefensePool(poolId uint64, tokenIn sdk.Int) *MsgJoinAttackPool {
+func NewMsgJoinDefensePool(poolID uint64, tokenIn sdk.Int) *MsgJoinAttackPool {
 	return &MsgJoinAttackPool{
-		PoolId:  poolId,
+		PoolId:  poolID,
 		TokenIn: tokenIn,
 	}
 }
@@ -126,9 +126,9 @@ func (msg MsgJoinDefensePool) ValidateBasic() error {
 	return nil
 }
 
-func NewMsgAddErrata(poolId uint64, vulnerabilityType string, errataCode string, vulnerability string) *MsgAddErrata {
+func NewMsgAddErrata(poolID uint64, vulnerabilityType string, errataCode string, vulnerability string) *MsgAddErrata {
 	return &MsgAddErrata{
-		PoolId:            poolId,
+		PoolId:            poolID,
 		VulnerabilityType: vulnerabilityType,
 		ErrataCode:        errataCode,
 		Vulnerability:     vulnerability,
