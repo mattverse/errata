@@ -3,6 +3,7 @@ package errata.audit.v1beta1;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
+import "errata/audit/v1beta/audit.proto";
 
 option go_package = "github.com/mattverse/errata/x/audit/types";
 
@@ -10,6 +11,9 @@ option go_package = "github.com/mattverse/errata/x/audit/types";
 service Query {
     rpc Protocol(QueryProtocolRequest) returns(QueryProtocolResponse) {
         option (google.api.http).get =  "/errata/audit/v1beta1/protocol";
+    }
+    rpc Protocols(QueryProtocolsRequest) returns(QueryProtocolsResponse) {
+        option (google.api.http).get =  "/errata/audit/v1beta1/protocols";
     }
 }
 
@@ -32,4 +36,11 @@ message QueryProtocolResponse {
     string defense_pool = 7 [
         (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
     ];
+}
+
+message QueryProtocolsRequest {
+}
+
+message QueryProtocolsResponse {
+    repeated Protocol Protocol = 1;
 }

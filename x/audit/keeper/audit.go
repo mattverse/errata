@@ -37,20 +37,21 @@ func (k Keeper) GetProtocolByID(ctx sdk.Context, protocolID uint64) (*types.Prot
 	return &protocol, err
 }
 
-func (k Keeper) GetAllProtocol(ctx sdk.Context) []types.Protocol {
+func (k Keeper) GetAllProtocol(ctx sdk.Context) ([]types.Protocol, error) {
 	protocols := []types.Protocol{}
 	iterator := k.ProtocolIterator(ctx)
 
 	defer iterator.Close()
 	for ; iterator.Valid(); iterator.Next() {
-		protocolID := sdk.BigEndianToUint64(iterator.Value())
-		protocol, err := k.GetProtocolByID(ctx, protocolID)
+		var protocol types.Protocol
+		err := proto.Unmarshal(iterator.Value(), &protocol)
+
 		if err != nil {
-			panic(err)
+			return nil, err
 		}
-		protocols = append(protocols, *protocol)
+		protocols = append(protocols, protocol)
 	}
-	return protocols
+	return protocols, nil
 
 }
 

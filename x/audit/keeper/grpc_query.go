@@ -36,3 +36,19 @@ func (q queryServer) Protocol(ctx context.Context, req *types.QueryProtocolReque
 		DefensePool: &protocol.DefensePool,
 	}, nil
 }
+
+func (q queryServer) Protocols(ctx context.Context, req *types.QueryProtocolsRequest) (*types.QueryProtocolsResponse, error) {
+	sdkCtx := sdk.UnwrapSDKContext(ctx)
+	var protocols []*types.Protocol
+	rawPs, err := q.keeper.GetAllProtocol(sdkCtx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	for _, p := range rawPs {
+		protocols = append(protocols, &p)
+	}
+
+	return &types.QueryProtocolsResponse{Protocol: protocols}, nil
+}
