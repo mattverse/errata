@@ -18,13 +18,20 @@ var (
 	_ sdk.Msg = &MsgAddErrata{}
 )
 
-func NewMsgRegisterProtocol(title string, description string, sourceCode string, projectHome string, category string) *MsgRegisterProtocol {
+func NewMsgRegisterProtocol(
+	title string,
+	description string,
+	sourceCode string,
+	projectHome string,
+	category string,
+	sender sdk.AccAddress) *MsgRegisterProtocol {
 	return &MsgRegisterProtocol{
 		Title:       title,
 		Description: description,
 		SourceCode:  sourceCode,
 		ProjectHome: projectHome,
 		Category:    category,
+		Sender:      sender.String(),
 	}
 }
 
